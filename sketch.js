@@ -20,15 +20,15 @@ function setup() {
   world = engine.world;
   
   var options = {
-    restitution : 0.4,
-    mass : 0.7,
-    friction : 0.5
+    restitution : 0.7,
+    mass : 0.8,
+    friction : 0.1
   }
-  ball = Bodies.rectangle(2,2,width,height,options);
+  ball = Bodies.rectangle(100,200,20,20,options);
   World.add(world,ball);
   //console.log(ball.position.x)
 
-  launcher = new Launcher(ball.body,{x:100,y:200})
+  launcher = new Launcher(ball,{x:100,y:200})
   
   ground = new Ground();
   stand1 = new Stand(390,300,250,10);
@@ -76,7 +76,9 @@ function setup() {
 }
 
 function draw() {
-  background(194,209,222); 
+  
+  background(194,209,222);
+  Engine.update(engine) 
  
   textSize(20);
   fill("lightyellow");
@@ -127,10 +129,20 @@ function draw() {
   block25.display();
   block29.display();
   pop();
+  launcher.display()
   
   rectMode(CENTER)
   rect(ball.position.x,ball.position.y,20,20);
-  ball.position.x=mouseX;
-  ball.position.y=mouseY;
+  // ball.position.x=mouseX;
+  // ball.position.y=mouseY;
   //console.log(ball.position.x)
+}
+
+  function mouseDragged(){
+    Matter.Body.setPosition(ball,{x:mouseX,y:mouseY})
+    
+}
+function mouseReleased(){
+    launcher.fly();
+    Matter.Body.applyForce(ball,{x:10,y:-20})
 }
