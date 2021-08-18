@@ -8,10 +8,10 @@ var holder,ball,ground;
 var stand1,stand2;
 var ball;
 var slingShot;
-var polygon_img;
+var ballImg;
 
 function preload(){
-  polygon_img=loadImage("polygon.png");
+  ballImg=loadImage("polygon.png");
 }
 
 function setup() {
@@ -20,14 +20,14 @@ function setup() {
   world = engine.world;
   
   var options = {
-    restitution : 0.7,
-    mass : 0.8,
+    restitution : 0.4,
+    mass : 1,
     friction : 0.1
   }
-  ball = Bodies.rectangle(100,200,20,20,options);
+  ball =Bodies.circle(10,15,15,options);
+  
   World.add(world,ball);
-  //console.log(ball.position.x)
-
+  
   launcher = new Launcher(ball,{x:100,y:200})
   
   ground = new Ground();
@@ -129,13 +129,11 @@ function draw() {
   block25.display();
   block29.display();
   pop();
-  launcher.display()
+  launcher.display();
+
+  imageMode(CENTER);
+  image(ballImg, ball.position.x, ball.position.y, 30, 30);
   
-  rectMode(CENTER)
-  rect(ball.position.x,ball.position.y,20,20);
-  // ball.position.x=mouseX;
-  // ball.position.y=mouseY;
-  //console.log(ball.position.x)
 }
 
   function mouseDragged(){
